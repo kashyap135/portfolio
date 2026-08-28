@@ -501,6 +501,97 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:62px;display:flex;al
 .pj-tab.active{border-color:var(--a);color:var(--bg);background:var(--a)}
 .pj-card.hidden{display:none}
 
+
+/* ── LED INDICATOR PULSE ON SKILLS ── */
+.sk-tag::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--a);
+  margin-right: 6px;
+  animation: led-pulse 1.5s infinite;
+  box-shadow: 0 0 8px var(--a);
+}
+@keyframes led-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--a); }
+  50% { opacity: 0.4; box-shadow: 0 0 3px var(--a); }
+}
+.sk-card:has(.sk-title--embedded) .sk-tag::before { background: #38BDF8; box-shadow: 0 0 8px #38BDF8; }
+.sk-card:has(.sk-title--proto) .sk-tag::before { background: #F97316; box-shadow: 0 0 8px #F97316; }
+.sk-card:has(.sk-title--prog) .sk-tag::before { background: #A5B4FC; box-shadow: 0 0 8px #A5B4FC; }
+.sk-card:has(.sk-title--web) .sk-tag::before { background: #22C55E; box-shadow: 0 0 8px #22C55E; }
+.sk-card:has(.sk-title--tools) .sk-tag::before { background: #EC4899; box-shadow: 0 0 8px #EC4899; }
+
+/* ── BREADBOARD-STYLE PROJECT CARDS ── */
+.pj-card {
+  background-image: 
+    radial-gradient(circle, rgba(56,189,248,.08) 1px, transparent 1px),
+    linear-gradient(90deg, transparent 24%, rgba(56,189,248,.05) 25%, rgba(56,189,248,.05) 26%, transparent 27%, transparent 74%, rgba(56,189,248,.05) 75%, rgba(56,189,248,.05) 76%, transparent 77%, transparent),
+    linear-gradient(rgba(56,189,248,.03) 24%, transparent 25%, transparent 74%, rgba(56,189,248,.03) 75%, rgba(56,189,248,.03));
+  background-size: 20px 20px, 20px 20px, 20px 20px;
+  background-position: 0 0, 0 0, 0 0;
+  background-color: var(--panel);
+}
+
+/* ── GLITCH EFFECT ON HOVER ── */
+.pj-card:hover, .sk-card:hover {
+  position: relative;
+}
+.pj-card::after, .sk-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(56,189,248,.1) 25%, 
+    transparent 50%, 
+    rgba(249,115,22,.1) 75%, 
+    transparent 100%);
+  opacity: 0;
+  animation: none;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.pj-card:hover::after, .sk-card:hover::after {
+  animation: glitch-flicker 0.3s ease-in-out;
+}
+@keyframes glitch-flicker {
+  0%, 100% { opacity: 0; transform: translate(0); }
+  20% { opacity: 0.5; transform: translate(-2px, 0); }
+  40% { opacity: 0.3; transform: translate(2px, 0); }
+  60% { opacity: 0.5; transform: translate(-1px, 0); }
+  80% { opacity: 0.3; transform: translate(1px, 0); }
+}
+
+/* ── LOGIC ANALYZER TIMELINE ── */
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    var(--a) 10%, 
+    var(--a) 50%, 
+    var(--a2) 50%, 
+    var(--a2) 90%, 
+    transparent 100%);
+  opacity: 0.6;
+}
+.tl-topbar {
+  background: linear-gradient(90deg, var(--a) 0%, var(--a) 50%, var(--a2) 50%, var(--a2) 100%) !important;
+  height: 3px;
+  animation: logic-pulse 2s ease-in-out infinite;
+}
+@keyframes logic-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
 /* ── RESUME BUTTON ── */
 .btn-resume-hero{
   display:inline-flex;align-items:center;gap:.6rem;
@@ -752,11 +843,11 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
     <div>
       <h1 class="hero-h1">G. SARAN<br><span class="hl">KASHYAP</span></h1>
       <div class="hero-role">&gt; <span id="typed"></span><span class="csr"></span></div>
-      <p class="hero-bio">Embedded systems student focused on firmware, sensor integration, PCB design and wireless communication. Currently interning at Milieu Global, studying EIE with a Minor in AI/ML at VNRVJIET.</p>
+      <p class="hero-bio">Embedded systems engineer specializing in Embedded C, RTOS, and real-time firmware development. Expertise in IoT architecture, communication protocols, sensor integration, PCB design, and hardware-software integration across microcontrollers and microprocessors. Building scalable IoT solutions from firmware design to cloud connectivity with focus on performance optimization and reliability.</p>
       <div class="hero-btns">
         <button onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})" class="btn bp">⚡ VIEW PROJECTS</button>
         <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="btn bo">📡 CONNECT</button>
-        <a href="https://raw.githubusercontent.com/kashyap135/portfolio/main/kashyapcglr (2).pdf" download="Saran_Kashyap_Resume.pdf" class="btn-resume-hero">
+        <a href="https://raw.githubusercontent.com/kashyap135/portfolio/main/kashyapn.pdf" download="Saran_Kashyap_Resume.pdf" class="btn-resume-hero">
           <span class="rbtn-label">RESUME</span>
           <span class="rbtn-sub">PDF · 2 pages</span>
         </a>
@@ -779,8 +870,9 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
       <div class="edu-dot"></div>
       <div class="edu-content">
         <div class="edu-inst">VNR VIGNANA JYOTHI INSTITUTE OF ENGINEERING &amp; TECHNOLOGY</div>
-        <div class="edu-deg">B.Tech — Electronics &amp; Instrumentation Engineering</div>
-        <div class="edu-minor">+ Minor in Artificial Intelligence &amp; Machine Learning <span style="opacity:.7">(Aug 2025)</span></div>
+        <div class="edu-deg">B.Tech — Electronics and Instrumentation Engineering (EIE)</div>
+        <div style="font-family:var(--mono);font-size:.75rem;color:var(--a);margin-top:.4rem">CGPA: <strong>9.26/10</strong></div>
+        <div class="edu-minor">+ Minor in Artificial Intelligence &amp; Machine Learning <span style="opacity:.7">CGPA: 9.5/10 (Aug 2025)</span></div>
         <span class="edu-year">Sept 2023 — Present</span>
       </div>
     </div>
@@ -827,13 +919,17 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
           </div>
         </div>
         <div class="tl-stack">
-          <span class="tl-chip">LoRa</span><span class="tl-chip">RF</span><span class="tl-chip">GSM</span><span class="tl-chip">EasyEDA</span><span class="tl-chip">ESP32</span><span class="tl-chip">Sensor Integration</span><span class="tl-chip">PCB Design</span>
+          <span class="tl-chip">Embedded C</span><span class="tl-chip">RTOS</span><span class="tl-chip">ESP-IDF</span><span class="tl-chip">PlatformIO</span><span class="tl-chip">GitHub</span><span class="tl-chip">SQL</span><span class="tl-chip">ESP32</span><span class="tl-chip">LoRa</span><span class="tl-chip">GSM</span><span class="tl-chip">MQTT</span><span class="tl-chip">Sensor Integration</span><span class="tl-chip">PCB Design</span><span class="tl-chip">I2C/SPI</span>
         </div>
         <ul class="tlds">
-          <li>Performing R&amp;D activities to evaluate and select suitable sensors and development boards based on project requirements</li>
-          <li>Building and testing initial embedded system prototypes for sensor-based applications</li>
-          <li>Integrating and testing wireless communication modules (LoRa, RF, GSM) for data transmission</li>
-          <li>Assisting in PCB design, schematic integration, component placement and prototype hardware validation using EasyEDA</li>
+          <li>Developed an IoT-based multi-gas monitoring system using ESP32 with multi-node LoRa communication and GSM-based cloud connectivity</li>
+          <li>Designed a 3-node LoRa architecture with relay node to extend communication range for reliable data transmission in constrained environments</li>
+          <li>Implemented MQTT-based data publishing over GSM (SIM800) for real-time remote monitoring using HiveMQ cloud broker</li>
+          <li>Built a WiFi AP-based web dashboard for system monitoring and runtime configuration of gas thresholds and calibration parameters</li>
+          <li>Adapted TypeScript/React thermal imaging dashboard for mine-monitoring gas detection, reducing MQTT + Ngrok latency from 20+ to under 10 seconds</li>
+          <li>Integrated multiple sensors using I2C, SPI, and ADC with I2C multiplexer-based channel selection; developed threshold-based alert system with LED, buzzer, OLED, SMS notifications</li>
+          <li>Assisted in PCB design and schematic development using EasyEDA; performed hardware debugging resolving LoRa frequency mismatch and GSM power stability issues</li>
+          <li>Assisting in HR recruitment activities alongside client interactions to support team growth and stakeholder relationships</li>
         </ul>
       </div>
     </div>
@@ -856,12 +952,13 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
               </div>
             </div>
             <div class="tl-stack">
-              <span class="tl-chip">Embedded C</span><span class="tl-chip">Firmware</span><span class="tl-chip">Solar Tracker</span><span class="tl-chip">Control Systems</span>
+              <span class="tl-chip">Embedded C</span><span class="tl-chip">PWM Control</span><span class="tl-chip">Solar Tracker</span><span class="tl-chip">Firmware</span><span class="tl-chip">Real-time Monitoring</span>
             </div>
             <ul class="tlds">
-              <li>Worked on development of a solar tracker project with a focus on firmware design, testing and optimization</li>
-              <li>Developed embedded software to enable seamless hardware–software integration and real-time system monitoring</li>
-              <li>Contributed to R&amp;D efforts to enhance efficiency, reliability and scalability of solar tracking systems by analyzing performance data and refining control algorithms</li>
+              <li>Developed firmware for dual-axis solar tracker with focus on PWM-based motor control, real-time monitoring, and performance optimization</li>
+              <li>Wrote embedded software enabling seamless hardware–software integration and refined control algorithms based on field performance data analysis</li>
+              <li>Analyzed performance data and identified optimization opportunities for improving tracking accuracy and system reliability</li>
+              <li>Collaborated with multidisciplinary team to design, validate, and field-test functional prototype models for deployment</li>
             </ul>
             <button class="cert-flip-btn" onclick="flipCard('hasol-flip')" title="View internship certificate">
               <span class="cert-btn-icon">🏅</span>
@@ -911,7 +1008,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
       <div class="pj-cat">// EMBEDDED</div>
       <div class="pj-t">FALL DETECTION SMART HELMET</div>
       <div class="pj-d">Wearable safety system with real-time vitals monitoring. Detects falls via ADXL345 accelerometer, monitors SpO₂ via MAX30100, and fires Twilio SMS alerts to caregivers instantly.</div>
-      <div class="pj-tech"><span>ADXL345</span><span>MAX30100</span><span>ESP32</span><span>Twilio API</span><span>IoT</span></div>
+      <div class="pj-tech"><span>Embedded C</span><span>ADXL345</span><span>MAX30100</span><span>ESP32</span><span>Twilio API</span><span>IoT</span></div>
       <a href="https://github.com/kashyap135/eipro/tree/main/shwithGPS" target="_blank" class="pj-link">⎋ VIEW ON GITHUB →</a>
     </div>
 
@@ -920,7 +1017,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
       <div class="pj-cat">// IoT</div>
       <div class="pj-t">IoT-CONTROLLED CAR</div>
       <div class="pj-d">ESP32-powered prototype with Blynk app and Xbox controller dual-mode wireless control. Low-latency real-time operation over Wi-Fi.</div>
-      <div class="pj-tech"><span>ESP32</span><span>Blynk</span><span>Xbox Controller</span><span>Wi-Fi</span></div>
+      <div class="pj-tech"><span>Embedded C</span><span>ESP32</span><span>Blynk</span><span>Xbox Controller</span><span>Wi-Fi</span></div>
       <a href="https://github.com/kashyap135/Robot-car" target="_blank" class="pj-link">⎋ VIEW ON GITHUB →</a>
     </div>
 
@@ -953,6 +1050,15 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
 
     <div class="pj-card" data-cat="web">
       <div class="pj-stripe"></div>
+      <div class="pj-cat">// CHROME EXT</div>
+      <div class="pj-t">AI VAULT — PRIVACY MANAGER</div>
+      <div class="pj-d">Local-first Chrome extension providing unified privacy controls across LLM platforms (ChatGPT, Claude, Gemini). Features platform adapter pattern, Shadow DOM isolation, SHA-256 hashing, IndexedDB storage, and stealth modes for secure workspace management.</div>
+      <div class="pj-tech"><span>JavaScript</span><span>Chrome API</span><span>IndexedDB</span><span>SHA-256</span><span>Shadow DOM</span></div>
+      <a href="https://github.com/kashyap135/AI-vault" target="_blank" class="pj-link">⎋ VIEW ON GITHUB →</a>
+    </div>
+
+    <div class="pj-card" data-cat="web">
+      <div class="pj-stripe"></div>
       <div class="pj-cat">// WEB</div>
       <div class="pj-t">TASK MANAGEMENT APP</div>
       <div class="pj-d">CRUD-based task manager with Node.js and persistent local storage. Clean interface for creating, reading, updating, and deleting tasks.</div>
@@ -974,7 +1080,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
       <div class="sk-icon">🔌</div>
       <div class="sk-title sk-title--embedded">EMBEDDED & IoT</div>
       <div class="sk-tags">
-        <span class="sk-tag">ESPressif</span><span class="sk-tag">Arduino</span><span class="sk-tag">Sensor Interfacing</span><span class="sk-tag">Circuit Design</span><span class="sk-tag">PCB Design</span><span class="sk-tag">Firmware</span>
+        <span class="sk-tag">ESP32</span><span class="sk-tag">STM32</span><span class="sk-tag">Arduino</span><span class="sk-tag">RTOS</span><span class="sk-tag">Linux</span><span class="sk-tag">Firmware Dev</span><span class="sk-tag">PCB Design</span>
       </div>
     </div>
     <div class="sk-card rv">
@@ -982,7 +1088,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
       <div class="sk-icon">📡</div>
       <div class="sk-title sk-title--proto">PROTOCOLS</div>
       <div class="sk-tags">
-        <span class="sk-tag">UART</span><span class="sk-tag">I2C</span><span class="sk-tag">SPI</span><span class="sk-tag">LoRa</span><span class="sk-tag">RF</span><span class="sk-tag">GSM</span>
+        <span class="sk-tag">UART</span><span class="sk-tag">I2C</span><span class="sk-tag">SPI</span><span class="sk-tag">LoRa</span><span class="sk-tag">RF</span><span class="sk-tag">GSM</span><span class="sk-tag">MQTT</span><span class="sk-tag">WiFi</span>
       </div>
     </div>
     <div class="sk-card rv">
@@ -990,7 +1096,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
       <div class="sk-icon">💻</div>
       <div class="sk-title sk-title--prog">PROGRAMMING</div>
       <div class="sk-tags">
-        <span class="sk-tag">C</span><span class="sk-tag">Embedded C</span><span class="sk-tag">Python</span><span class="sk-tag">JavaScript</span><span class="sk-tag">DSA</span>
+        <span class="sk-tag">C</span><span class="sk-tag">Embedded C</span><span class="sk-tag">Python</span><span class="sk-tag">JavaScript</span><span class="sk-tag">TypeScript</span><span class="sk-tag">DSA</span>
       </div>
     </div>
     <div class="sk-card rv">
@@ -998,7 +1104,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
       <div class="sk-icon">🌐</div>
       <div class="sk-title sk-title--web">WEB & BACKEND</div>
       <div class="sk-tags">
-        <span class="sk-tag">Node.js</span><span class="sk-tag">Express</span><span class="sk-tag">MongoDB</span><span class="sk-tag">REST APIs</span><span class="sk-tag">HTML/CSS</span>
+        <span class="sk-tag">Node.js</span><span class="sk-tag">Express</span><span class="sk-tag">MongoDB</span><span class="sk-tag">React</span><span class="sk-tag">TypeScript</span><span class="sk-tag">REST APIs</span>
       </div>
     </div>
     <div class="sk-card rv">
@@ -1006,7 +1112,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
       <div class="sk-icon">🛠️</div>
       <div class="sk-title sk-title--tools">TOOLS</div>
       <div class="sk-tags">
-        <span class="sk-tag">Arduino IDE</span><span class="sk-tag">EasyEDA</span><span class="sk-tag">MATLAB</span><span class="sk-tag">Simulink</span><span class="sk-tag">VS Code</span><span class="sk-tag">GitHub</span>
+        <span class="sk-tag">KiCad</span><span class="sk-tag">EasyEDA</span><span class="sk-tag">PlatformIO</span><span class="sk-tag">ESP-IDF</span><span class="sk-tag">STM32CubeIDE</span><span class="sk-tag">MATLAB</span><span class="sk-tag">VS Code</span><span class="sk-tag">GitHub</span>
       </div>
     </div>
 
@@ -1043,7 +1149,9 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:1.
   <div style="margin-bottom:2rem">
     <div style="font-family:var(--mono);font-size:.62rem;color:var(--a);letter-spacing:2px;margin-bottom:1rem;opacity:.8">// CERTIFICATIONS</div>
     <div class="ac-grid">
+      <div class="ac-card"><div class="ac-ic">🔬</div><div class="ac-tx"><strong>NPTEL</strong>Real Time Operating System</div></div>
       <div class="ac-card"><div class="ac-ic">🔬</div><div class="ac-tx"><strong>NPTEL</strong>A Brief Introduction of Micro-Sensors</div></div>
+      <div class="ac-card"><div class="ac-ic">⚙️</div><div class="ac-tx"><strong>MAVEN SILICON</strong>Embedded System Design using C Programming</div></div>
     </div>
   </div>
 
